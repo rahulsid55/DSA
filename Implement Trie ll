@@ -1,0 +1,76 @@
+class node{
+    public:
+  node *links[26];
+   int end;
+    int prefix;
+    node(){
+        for(int i=0;i<26;i++)
+            links[i]=NULL;
+        end=0;
+        prefix=0;
+    }
+};
+class Trie{
+
+    public:
+    node *root=new node();
+    Trie(){
+        // Write your code here.
+    }
+
+    void insert(string &word){
+        // Write your code here.
+        node *temp=root;
+        for(int i=0;i<word.length();i++){
+            int index=word[i]-'a';
+            if(!temp->links[index])
+            {
+                temp->links[index]=new node();
+            }
+            temp=temp->links[index];
+            temp->prefix+=1;
+        }
+        temp->end+=1;
+    }
+
+    int countWordsEqualTo(string &word){
+        node *temp=root;
+        for(int i=0;i<word.length();i++){
+            int index=word[i]-'a';
+            if(!temp->links[index])
+            {
+                return 0;
+            }
+            temp=temp->links[index];
+        }
+        return temp->end;
+    }
+
+    int countWordsStartingWith(string &word){
+        node *temp=root;
+        for(int i=0;i<word.length();i++){
+            int index=word[i]-'a';
+            if(!temp->links[index])
+            {
+                return 0;
+            }
+            temp=temp->links[index];
+        }
+        return temp->prefix;
+    }
+
+    void erase(string &word){
+        node *temp=root;
+        for(int i=0;i<word.length();i++){
+            int index=word[i]-'a';
+            if(!temp->links[index])
+            {
+                return;
+            }
+            temp=temp->links[index];
+            temp->prefix-=1;
+            
+        }
+        temp->end-=1;
+    }
+};

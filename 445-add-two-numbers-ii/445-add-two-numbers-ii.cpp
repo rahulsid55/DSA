@@ -10,47 +10,68 @@
  */
 class Solution {
 public:
-    ListNode *reverse(ListNode *head ){
-        if(head==NULL or head->next==NULL)
+    int len(ListNode *head)
+    {
+        int c=0;
+        while(head)
         {
-            return head;
+            c++;
+            head=head->next;
         }
+        return c;
+    }
+    ListNode *reverse(ListNode *head){
+        if(head==NULL or head->next==NULL)
+            return head;
         ListNode *shead=reverse(head->next);
         head->next->next=head;
         head->next=NULL;
         return shead;
     }
-    ListNode *sum(ListNode* l1, ListNode* l2){
-        int carry=0;
-        ListNode *temp=new ListNode(0);
-        ListNode *dummy=temp;
-        
-        while(l1 || l2 || carry){
-            int ans=0;
-            if(l1){
-                ans+=l1->val;
-                l1=l1->next;
-            }
-            if(l2){
-                ans+=l2->val;
-                l2=l2->next;
-            }
-            if(carry)
-            {
-                ans+=carry;
-            }
-            carry=ans/10;
-            ListNode *x=new ListNode(ans%10);
-            temp->next=x;
-            temp=temp->next;
-        }
-        temp->next=NULL;
-        return dummy->next;
-    }
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        l1=reverse(l1);
-        l2=reverse(l2);
-        ListNode *ans=sum(l1,l2);
-        return reverse(ans);
+        int len1=len(l1);
+        int len2=len(l2);
+        if(len(l1)<len(l2)){
+            return addTwoNumbers(l2,l1);
+        }
+        stack<int> s;
+        int diff=len1-len2;
+        //cout<<diff;
+        for(int i=0;i<diff;i++)
+        {
+            s.push(l1->val);
+            l1=l1->next;
+        }
+        while(l1->next)
+        {
+            
+            //cout<<1;
+            s.push(l1->val+l2->val);
+            l1=l1->next;
+            l2=l2->next;
+        }
+        int sum=l1->val+l2->val;
+        int carry=sum/10;
+        ListNode *ans=new ListNode(sum%10);
+        ListNode *dummy=ans;
+        while(!s.empty())
+        {
+            int x=s.top()+carry;
+            s.pop();
+            ListNode *temp=new ListNode(x%10);
+            ans->next=temp;
+            ans=ans->next;
+            carry=x/10;
+        }
+        if(carry){
+            ListNode *temp=new ListNode(carry);
+            ans->next=temp;
+            ans=ans->next;
+            ans->next=NULL;
+        }
+        return reverse(dummy);
+        
+        
+        
     }
 };

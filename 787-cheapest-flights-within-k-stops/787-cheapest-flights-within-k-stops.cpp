@@ -1,33 +1,41 @@
 class Solution {
 public:
-    int dj(int n,vector<vector<pair<int,int>>> g,int src,int des,int k){
-        set<pair<pair<int,int>,int>> ds;
-        ds.insert({{0,src},0});
-        while(!ds.empty()){
-            auto it=ds.begin();
-            int cost=it->first.first;
-            int node=it->first.second;
-            int lvl=it->second;
-            ds.erase(it);
-            if(lvl>k+1){
-                continue;
-            }
-            if(node==des) return cost;
-            for(auto [v,d] : g[node])
-            {
-                if(lvl<=k){
-                    ds.insert({{cost+d,v},lvl+1});
+    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
+     vector<vector<pair<int,int>>>v(n);
+        k+=1;
+     for(int i=0;i<flights.size();i++)
+     {
+        int x=flights[i][0];
+        int y=flights[i][1];
+        int z=flights[i][2];
+        v[x].push_back({y,z});
+     }
+     queue<pair<int,int>>q;
+     q.push({src,0});
+     vector<int>vis(n,INT_MAX);
+     vis[src]=0;
+     while(q.size()!=0)
+     {
+        int size=q.size();
+        while(size--)
+        {
+            auto [x,y]=q.front();
+            q.pop();
+            if(vis[x]>y)vis[x]=y;
+            for(auto val:v[x]){
+                if(vis[val.first]==INT_MAX)
+                q.push({val.first,val.second+y});
+                else if(vis[val.first]>val.second+y){
+                    q.push({val.first,val.second+y});
                 }
             }
         }
-                  return INT_MAX;
-    }
-    int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<vector<pair<int,int>>> g(n);
-        for(auto edge: flights){
-            g[edge[0]].push_back({edge[1],edge[2]});
+        if(k==0){
+            break;
         }
-        int ans=dj(n,g,src,dst,k);
-        return ans==INT_MAX?-1:ans;
+         k--; 
+     }
+     if(vis[dst]!=INT_MAX) return vis[dst];
+     return -1;
     }
 };

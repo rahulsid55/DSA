@@ -1,40 +1,33 @@
 class Solution {
 public:
-    vector<pair<int,int> > adj[101];
-    
-    int dijkstra(int n, int src, int dst, int k){
-        vector<int> dist(n+1,(1e9));
-        dist[src]=0;
-        set<pair<pair<int,int>,int> > setds;
-        setds.insert({{0,src},0});
-        int ans=1e9;
-        while(!setds.empty()){
-            auto it=setds.begin();
-            int d=it->first.first;
-            int u=it->first.second;
-            int l=it->second;
-            setds.erase(it);
-            if(l>k+1)continue;
-            if(u==dst){
-                    return d;
+    int dj(int n,vector<vector<pair<int,int>>> g,int src,int des,int k){
+        set<pair<pair<int,int>,int>> ds;
+        ds.insert({{0,src},0});
+        while(!ds.empty()){
+            auto it=ds.begin();
+            int cost=it->first.first;
+            int node=it->first.second;
+            int lvl=it->second;
+            ds.erase(it);
+            if(lvl>k+1){
+                continue;
             }
-            for(auto [v,p]:adj[u])
+            if(node==des) return cost;
+            for(auto [v,d] : g[node])
             {
-                if(d+p<(1e9) && l<=k){
-                    setds.insert({{d+p,v},l+1});
+                if(lvl<=k){
+                    ds.insert({{cost+d,v},lvl+1});
                 }
             }
         }
-        return  ans;
-        
+                  return INT_MAX;
     }
-    
-    
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        for(int i=0;i<flights.size();i++){
-            adj[flights[i][0]].push_back({flights[i][1],flights[i][2]});
+        vector<vector<pair<int,int>>> g(n);
+        for(auto edge: flights){
+            g[edge[0]].push_back({edge[1],edge[2]});
         }
-        int ans=dijkstra(n,src,dst,k);
-        return (ans>=(1e9))?-1:ans; 
+        int ans=dj(n,g,src,dst,k);
+        return ans==INT_MAX?-1:ans;
     }
 };

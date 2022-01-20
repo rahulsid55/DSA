@@ -1,41 +1,45 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-     vector<vector<pair<int,int>>>v(n);
-        k+=1;
-     for(int i=0;i<flights.size();i++)
-     {
-        int x=flights[i][0];
-        int y=flights[i][1];
-        int z=flights[i][2];
-        v[x].push_back({y,z});
-     }
-     queue<pair<int,int>>q;
-     q.push({src,0});
-     vector<int>vis(n,INT_MAX);
-     vis[src]=0;
-     while(q.size()!=0)
-     {
-        int size=q.size();
-        while(size--)
-        {
-            auto [x,y]=q.front();
-            q.pop();
-            if(vis[x]>y)vis[x]=y;
-            for(auto val:v[x]){
-                if(vis[val.first]==INT_MAX)
-                q.push({val.first,val.second+y});
-                else if(vis[val.first]>val.second+y){
-                    q.push({val.first,val.second+y});
-                }
+        // Create Graph
+        map<int, vector<pair<int, int>>> graph;
+        
+        for (vector<int> flight : flights) {
+            int u = flight[0];
+            int v = flight[1];
+            int p = flight[2];
+            
+            if (graph.find(u) == graph.end()) graph[u] = vector<pair<int, int>>();
+            
+            graph[u].push_back({v, p});
+        }
+        
+        // { cost, node, stops }
+        priority_queue< tuple<int, int, int>, vector<tuple<int, int, int>>, greater<tuple<int, int, int>> > pq;
+        vector<int> discovery(n + 1, INT_MAX); // To Avoid TLE
+        
+        pq.push({0, src, 0});
+        
+        while (!pq.empty()) {
+            auto top = pq.top();
+            pq.pop();
+            
+            auto [cost, curr, stops] = top;
+            
+            if(stops > discovery[curr]) continue;  // To Avoid TLE
+		    discovery[curr] = stops;
+            
+            if (curr == dst) return cost;
+            
+            if (stops > k) continue;
+            
+            for (auto it : graph[curr]) {
+                auto [n, c] = it;
+                
+                pq.push({cost + c, n, stops + 1});
             }
         }
-        if(k==0){
-            break;
-        }
-         k--; 
-     }
-     if(vis[dst]!=INT_MAX) return vis[dst];
-     return -1;
+        
+        return -1;
     }
 };

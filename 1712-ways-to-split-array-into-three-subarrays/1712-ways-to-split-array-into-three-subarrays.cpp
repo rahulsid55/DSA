@@ -1,3 +1,8 @@
+/**
+   ps[i]<=ps[j]-ps[i]<=ps[n-1]-ps[j]
+   for every i we have to find j.J can be found using binary search
+
+**/
 class Solution {
 public:
     int waysToSplit(vector<int>& nums) {

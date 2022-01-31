@@ -13,7 +13,7 @@ public:
             if(ans==n1 ) two++;
             if(ans==n2) three++;
             if(ans==n3) five++;
-            cout<<ans<<" ";
+            //cout<<ans<<" ";
         }
         return dp[n];
     }

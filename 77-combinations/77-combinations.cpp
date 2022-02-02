@@ -14,11 +14,7 @@ public:
     vector<vector<int>> combine(int n, int k) {
         vector<vector<int>> ans;
         vector<int> ds;
-        for(int i=1;i<=n;i++){
-            ds.push_back(i);
-            help(ds,1,k,ans,n,i);
-            ds.pop_back();
-            }
+        help(ds,0,k,ans,n,0);
         return ans;
     }
 };

@@ -1,6 +1,5 @@
 class Solution {
 public:
-    int visited[20]={0};
     void help(vector<int> ds,int siz,int k,vector<vector<int>> &ans,int n,int x){
         if(k==siz){
             ans.push_back(ds);

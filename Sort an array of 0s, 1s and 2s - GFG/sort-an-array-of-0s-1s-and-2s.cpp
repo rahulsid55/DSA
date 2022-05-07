@@ -10,22 +10,22 @@ class Solution
     public:
     void sort012(int a[], int n)
     {
-    int mid=0,l=0,r=n-1;
-    while(mid<=r){
-        if(a[mid]==0){
-            swap(a[l],a[mid]);
-            l++;
-            mid++;
+        int i=0,mid=0,j=n-1;
+        while(mid<=j){
+            if(a[mid]==1){
+                mid++;
+            }
+            else if(a[mid]==0){
+                swap(a[i],a[mid]);
+                i++;
+                mid++;
+            }
+            else if(a[mid]==2){
+                swap(a[j],a[mid]);
+                j--;
+            }
         }
-        else if(a[mid]==2){
-            swap(a[mid],a[r]);
-            r--;
-        }
-        else{
-            mid++;
-        }
-        
-    }    }
+    }
     
 };
 

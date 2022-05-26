@@ -17,7 +17,7 @@ class Solution{
             c=d;
             d=e;
         }
-        return min({a,b,c,d,e});
+        return min({a,b,c,d});
     }
 };
 

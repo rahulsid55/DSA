@@ -100,25 +100,28 @@ struct Node
     }
 };
  */
-
+ struct temp{
+        bool x;
+        int h;
+    };
 class Solution{
     public:
     //Function to check whether a binary tree is balanced or not.
    
-    pair<bool,int> help(Node *root){
+    struc temp help(Node *root){
         if(!root) return {true,0};
-        pair<bool,int> l,r;
-        l=isBalanced(root->left);
-        r=isBalanced(root->right);
-        if(l.first and r.first and abs(l.second-r.second)<=1){
-            return {true,1+max(l.second,r.second)};
+        temp l,r;
+        l=help(root->left);
+        r=help(root->right);
+        if(l.x and r.x and abs(l.h-r.h)<=1){
+            return {true,1+max(l.h,r.h)};
         }
         return {false,1+max(l.h,r.h)};
     }
     bool isBalanced(Node *root)
     {
         if(!root) return true;
-        return help(root).first;
+        return help(root).x;
     }
 };
 

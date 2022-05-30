@@ -9,19 +9,12 @@ class Solution
   public:
     int minAmount(int A[] , int N)
     {
-        int sum=0,dp[2][N];
-        for(int i=0;i<N;i++){
-            sum+=A[i];
-            if(i==0){
-                dp[0][i]=0;
-                dp[1][i]=A[i];
-            }
-            else{
-                dp[0][i]=max(dp[0][i-1],dp[1][i-1]);
-                dp[1][i]=A[i]+dp[0][i-1];
-            }
+        if(N==1) return A[0];
+        if(N==2) return min(A[0],A[1]);
+        for(int i=N-3;i>=0;i--){
+            A[i]=A[i]+min(A[i+1],A[i+2]);
         }
-        return sum-max(dp[0][N-1],dp[1][N-1]);
+        return min(A[0],A[1]);
     }
 };
 

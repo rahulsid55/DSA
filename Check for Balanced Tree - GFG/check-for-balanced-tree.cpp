@@ -108,7 +108,7 @@ class Solution{
     public:
     //Function to check whether a binary tree is balanced or not.
    
-    struc temp help(Node *root){
+     temp help(Node *root){
         if(!root) return {true,0};
         temp l,r;
         l=help(root->left);

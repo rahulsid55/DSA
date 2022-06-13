@@ -16,8 +16,9 @@ public:
         if(l1->val>l2->val) swap(l1,l2);
         
         ListNode *ans=l1;
+        ListNode *temp=NULL;
         while(l1 and l2){
-            ListNode *temp=NULL;
+            
             while(l1 and l1->val<=l2->val){
                 temp=l1;
                 l1=l1->next;

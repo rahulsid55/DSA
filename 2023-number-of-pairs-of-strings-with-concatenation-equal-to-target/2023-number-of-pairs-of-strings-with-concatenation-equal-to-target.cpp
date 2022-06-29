@@ -1,18 +1,29 @@
 class Solution {
 public:
     int numOfPairs(vector<string>& nums, string target) {
-        int n=nums.size();
-        int ct=0;
-        for(int i=0;i<n;i++)
-        {
-            for(int j=i+1;j<n;j++)
-            {
-                string temp1=nums[i]+nums[j];
-                string temp2=nums[j]+nums[i];
-                ct+=(target==temp1)+(target==temp2);
-            }
+        map<string,int> mp;
+        for(auto i: nums){
+            mp[i]++;
         }
-        return ct;
+        int i=0,cnt=0,n=target.size();
+        while(i<n-1){
+            string f=target.substr(0,i+1);
+            string s=target.substr(i+1);
+            //cout<<f<<" "<<s<<endl;
+            if(f==s){
+                if(mp.count(f)){
+                    cnt+=(mp[f])*(mp[f]-1);
+                }
+            }
+            else{
+                if(mp.count(f) and mp.count(s)){
+                    cnt+=(mp[f])*(mp[s]);
+                }
+            }
+            i++;
+        }
+        return cnt;
+        
         
     }
 };

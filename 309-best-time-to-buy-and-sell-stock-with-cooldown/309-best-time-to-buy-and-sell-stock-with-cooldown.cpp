@@ -7,13 +7,13 @@ class Solution {
         if(dp[bought][cool][pos]!=-1) return dp[bought][cool][pos];
         if(bought)
         {
-dp[bought][cool][pos]=max(prices[pos]+recursion(prices,pos+1,true,false),recursion(prices,pos+1,cool,bought));
+dp[bought][cool][pos]=max(prices[pos]+recursion(prices,pos+1,!cool,!bought),recursion(prices,pos+1,cool,bought));
         }
         else
         {
             if(cool)
             {
-                dp[bought][cool][pos]=recursion(prices,pos+1,false,bought);
+                dp[bought][cool][pos]=recursion(prices,pos+1,!cool,bought);
             }
             else
             {

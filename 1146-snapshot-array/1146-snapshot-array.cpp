@@ -19,20 +19,14 @@ public:
     }
     
     int get(int index, int snap_id) {
-        if(v[index].find(snap_id)!=v[index].end()){
-            return v[index][snap_id];
-        }
-        else{
             int ans;
             for(auto it: v[index]){
-                if(it.first<snap_id) ans=it.second;
+                if(it.first<=snap_id) ans=it.second;
                 else{
                     break;
                 }
             }
             return ans;
-        }
-        return 0;
         
     }
 };

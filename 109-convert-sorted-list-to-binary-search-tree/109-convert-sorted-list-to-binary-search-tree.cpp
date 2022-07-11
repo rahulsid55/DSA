@@ -21,23 +21,14 @@
  */
 class Solution {
 public:
+     map<int,ListNode *> mp;
     TreeNode *solve(ListNode *head,int l,int h){
         if(l>h) return NULL;
         if(l==h){
-        int x=l;
-        ListNode *temp=head;
-        while(x--){
-            temp=temp->next;
-        }
-            return new TreeNode(temp->val);
+            return new TreeNode(mp[l]->val);
         }
         int mid=(l+h)/2;
-        int x=mid;
-        ListNode *temp=head;
-        while(x--){
-            temp=temp->next;
-        }
-        TreeNode *root=new TreeNode(temp->val);
+        TreeNode *root=new TreeNode(mp[mid]->val);
         root->left=solve(head,l,mid-1);
         root->right=solve(head,mid+1,h);
         return root;
@@ -47,7 +38,9 @@ public:
         if(!head) return NULL;
         int l=0,h=0;
         ListNode *temp=head;
+       
         while(temp){
+            mp[h]=temp;
             temp=temp->next;
             h++;
         }

@@ -27,10 +27,6 @@ class Solution {
             {
                 root->right->next=root->next->left;
             }
-            else
-            {
-                root->next=NULL;
-            }
         solve(root->right);
         return;
     }

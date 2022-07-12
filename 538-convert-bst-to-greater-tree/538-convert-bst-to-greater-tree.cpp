@@ -11,31 +11,16 @@
  */
 class Solution {
 public:
-    vector<int> in;
-    int i=0;
+    int sum=0;
     void inorder(TreeNode *root){
         if(!root) return;
-        inorder(root->left);
-        in.push_back(root->val);
         inorder(root->right);
-    }
-    void inorder2(TreeNode *root){
-        if(!root) return;
-        inorder2(root->left);
-        root->val=in[i++];
-        inorder2(root->right);
+        sum+=root->val;
+        root->val=sum;
+        inorder(root->left);
     }
     TreeNode* convertBST(TreeNode* root) {
         inorder(root);
-        int n=in.size();
-        for(int i=n-2;i>=0;i--){
-            in[i]=in[i]+in[i+1];
-        }
-
-        inorder2(root);
         return root;
-        
-    
-        
     }
 };

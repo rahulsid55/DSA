@@ -11,10 +11,6 @@ public:
                 if(j==1){
                     ans=ans*x;
                 }
-                else if(j==2){
-                    ans=ans*x;
-                    x--;
-                }
                 else{
                     ans=ans*x;
                     x--;

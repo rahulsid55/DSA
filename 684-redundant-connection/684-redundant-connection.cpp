@@ -20,8 +20,8 @@ public:
             parent[v]=u;
         else 
         {
-            parent[v]=u;
-            rank[u]++;
+            parent[u]=v;
+            rank[v]++;
         }
     }
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {

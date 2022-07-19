@@ -2,7 +2,7 @@ class Solution {
 public:
     long long base = 101 , mod = 1011001110001111;
     int findLength(vector<int>& nums1, vector<int>& nums2) {
-         int L = 0 , R = max(nums1.size(),nums2.size()) , ans = 0;
+         int L = 0 , R = min(nums1.size(),nums2.size()) , ans = 0;
          while(L<=R) {
               int m = (L+R)/2;
               if(good(nums1,nums2,m)) {

@@ -16,14 +16,17 @@ public:
         ListNode *x1=t1,*x2=t2;
         while(head){
             if(head->val<x){
-                t1->next=new ListNode(head->val);
+                t1->next=head;
                 t1=t1->next;
+                head=head->next;
+                t1->next=NULL;
             }
             else{
-                t2->next=new ListNode(head->val);
+                t2->next=head;
                 t2=t2->next;
+                head=head->next;
+                t2->next=NULL;
             }
-            head=head->next;
         }
         t1->next=x2->next;
         t2->next=NULL;

@@ -10,7 +10,7 @@ public:
                 }
             }
             if(ct%3){
-                ans+=(1<<i);
+                ans|=(1<<i);
             }
         }
         return ans;

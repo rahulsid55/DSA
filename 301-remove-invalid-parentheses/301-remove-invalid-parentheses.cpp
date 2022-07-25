@@ -26,7 +26,6 @@ public:
         if(cnt==0){
             if(invalid(s)==0){
             ans.push_back(s);
-                mp[s]=1;
             }
         return;
         }
